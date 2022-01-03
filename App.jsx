@@ -13,11 +13,15 @@ import * as Location from "expo-location";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
+import dayjs from "dayjs";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 export default function App() {
   LogBox.ignoreLogs(["Remote debugger"]);
+
+  const now = dayjs();
+  const today = now.format("YYYY년 MM월 DD일");
 
   const API_KEY = "5459d8f9dd0632df6f0fc2b95f46ea5d";
 
@@ -40,6 +44,7 @@ export default function App() {
       { latitude, longitude },
       { useGoogleMaps: false }
     );
+
     setCity(location[0].city);
 
     const { data } = await axios.get(
@@ -74,6 +79,8 @@ export default function App() {
               <Ionicons name="md-location-outline" size={58} color="white" />
               {city}
             </Text>
+
+            <Text style={{ color: "white" }}>{today}</Text>
           </View>
           <ScrollView horizontal pagingEnabled indicatorStyle="white">
             {days.length === 0 ? (
@@ -91,6 +98,11 @@ export default function App() {
                     />
                   </View>
                   <View style={styles.info}>
+                    <Text style={{ color: "white" }}>
+                      {i === 0
+                        ? "Today"
+                        : now.add(i, "day").format("YYYY년 MM월 DD일")}
+                    </Text>
                     <View style={{ flexDirection: "row" }}>
                       <Text style={styles.temp}>
                         {Number(day.temp.day).toFixed(1)}
