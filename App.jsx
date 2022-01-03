@@ -46,8 +46,6 @@ export default function App() {
       `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=alerts&units=metric&appid=${API_KEY}`
     );
 
-    console.log(data);
-
     setDays(data.daily);
   };
 
